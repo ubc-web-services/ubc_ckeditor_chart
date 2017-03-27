@@ -1,0 +1,5 @@
+name = UBC CKEditor Chart Widget
+description = A ckeditor wysiwyg plugin that allows the user to ad charts using the <a href="http://ckeditor.com/addon/chart" target="_blank">ckeditor chart plugin</a>.
+package = UBC IT Web Services
+core = 7.x
+dependencies[] = ckeditor

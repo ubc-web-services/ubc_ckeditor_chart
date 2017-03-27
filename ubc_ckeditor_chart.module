@@ -1,0 +1,44 @@
+<?php
+/**
+ * Created by jotoole, 2017-03-25.
+ */
+/**
+ * Implements hook_ckeditor_plugin().
+ */
+function ubc_ckeditor_chart_ckeditor_plugin() {
+  return array(
+		'chart' => array(
+      'name' => 'chart',
+      'desc' => t('Chart: Plugin to add charts with the chart.js library.'),
+      'path' => drupal_get_path('module', 'ubc_ckeditor_chart') . '/plugins/chart/',
+      'buttons' => array(
+        'Chart' => array(
+          'label' => 'Charts.',
+          'icon' => 'icons/chart.png',
+        ),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function ubc_ckeditor_chart_entity_view($entity, $type, $view_mode, $langcode) {
+  // Load the widget2chart.js file.
+  drupal_add_js(drupal_get_path('module', 'ubc_ckeditor_chart') . '/plugins/chart/widget2chart.min.js');
+  // Load the chart.js library.
+  drupal_add_js(drupal_get_path('module', 'ubc_ckeditor_chart') . '/plugins/chart/lib/chart.min.js');
+  // Load the local js for theming.
+  drupal_add_js('chartjs_colors = {
+	  // Colors for Bar/Line chart.
+	  fillColor: "rgba(0,93,166,0.5)",
+	  strokeColor: "rgba(0,33,69,0.8)",
+	  highlightFill: "rgba(0,93,166,0.75)",
+	  highlightStroke: "rgba(0,33,69,1)",
+	  // Colors for Doughnut/Pie/PolarArea charts.
+	  data: [ "#002145", "#005da6", "#00a8e1", "#97d4e9", "#D3F2EC", "#2f5d7c", "#5e869f", "#98b2c3", "#c3d0d8", "#002145", "#005da6", "#00a8e1" ]},
+  chartjs_config = {};
+  Chart.defaults.global.responsive = true;', array('type' => 'inline', 'group' => JS_THEME, 'scope' => 'footer'));
+  drupal_add_css('.chartjs-legend {display: none}', array('type' => 'inline', 'group' => CSS_THEME, 'weight' => -98));
+}
